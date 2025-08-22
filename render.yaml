@@ -17,9 +17,6 @@ services:
       - key: ENVIRONMENT
         value: production
     healthCheckPath: /health
-    ports:
-      - port: 8000
-        protocol: HTTP
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port 8000
     
     # Auto-deploy settings
