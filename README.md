@@ -1,4 +1,4 @@
-# DV ATM System - DoubleVerify Assignment
+# DV ATM System
 
 A thread-safe ATM system built with FastAPI, featuring containerization and cloud deployment.
 
