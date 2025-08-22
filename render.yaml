@@ -24,6 +24,4 @@ services:
     # Resource limits for free tier
     numInstances: 1
     
-    # Custom domains (optional - you can add your own domain later)
-    customDomains:
-      - name: atm.dv.com
+    # Custom domains can be added through Render dashboard after deployment
