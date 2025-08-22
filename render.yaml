@@ -25,5 +25,5 @@ services:
     numInstances: 1
     
     # Custom domains (optional - you can add your own domain later)
-    # customDomains:
-    #   - name: your-domain.com
+    customDomains:
+      - name: atm.dv.com
