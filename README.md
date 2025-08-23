@@ -142,7 +142,7 @@ python tests/run_tests.py
 
 ### Individual Test Scripts
 ```bash
-# Basic API functionality tests
+# Basic API functionality tests (includes limit and validation tests)
 python tests/test_api.py
 
 # Advanced thread safety and concurrency tests
@@ -161,41 +161,49 @@ python tests/test_api.py https://your-deployed-url.com
 - ✅ **Concurrency Tests**: Multi-account parallel operations
 - ✅ **Performance Tests**: Timing analysis and bottleneck identification
 - ✅ **Integrity Tests**: Balance consistency under concurrent load
+- ✅ **Limit Tests**: MAX_ACCOUNTS and MAX_TRANSACTION_AMOUNT enforcement
+- ✅ **Validation Tests**: Input validation and error handling
+- ✅ **Rate Limiting Tests**: API rate limiting functionality
 
 ### Manual Testing Examples
 
-#### 1. Create an Account
+#### 1. Health Check
+```bash
+curl "http://localhost:8000/health"
+```
+
+#### 2. Create an Account
 ```bash
 curl -X POST "http://localhost:8000/accounts" \
   -H "Content-Type: application/json" \
   -d '{"initial_balance": 1000.0}'
 ```
 
-#### 2. Check Balance
+#### 3. Check Balance
 ```bash
 curl "http://localhost:8000/accounts/{account_number}/balance"
 ```
 
-#### 3. Deposit Money
+#### 4. Deposit Money
 ```bash
 curl -X POST "http://localhost:8000/accounts/{account_number}/deposit" \
   -H "Content-Type: application/json" \
   -d '{"amount": 500.0}'
 ```
 
-#### 4. Withdraw Money
+#### 5. Withdraw Money
 ```bash
 curl -X POST "http://localhost:8000/accounts/{account_number}/withdraw" \
   -H "Content-Type: application/json" \
   -d '{"amount": 200.0}'
 ```
 
-#### 5. List All Accounts
+#### 6. List All Accounts
 ```bash
 curl "http://localhost:8000/accounts"
 ```
 
-#### 6. Delete Account
+#### 7. Delete Account
 ```bash
 curl -X DELETE "http://localhost:8000/accounts/{account_number}"
 ```

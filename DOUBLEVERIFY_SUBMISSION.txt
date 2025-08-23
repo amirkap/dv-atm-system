@@ -121,7 +121,7 @@ LOCAL TESTING:
 1. Clone repository: git clone https://github.com/amirkap/dv-atm-system
 2. Install dependencies: pip install -r requirements.txt
 3. Run server: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-4. Run tests: python run_tests.py
+4. Run tests: python run_tests.py (includes limit and validation tests)
 
 DEPLOYED SERVICE TESTING:
 1. Test health: curl https://dv-atm-system.onrender.com/health
@@ -150,6 +150,8 @@ TECHNICAL HIGHLIGHTS:
 - Containerized deployment with Docker
 - Production-ready configuration
 - Comprehensive test suite with 100% endpoint coverage
+- Limit enforcement (MAX_ACCOUNTS, MAX_TRANSACTION_AMOUNT)
+- Input validation and rate limiting
 
 ================================================================================
 8. PERFORMANCE & SCALABILITY

@@ -134,3 +134,6 @@ Thumbs.db
 
 # Docker
 .dockerignore
+
+# Submission
+DOUBLEVERIFY_SUBMISSION.txt
