@@ -5,9 +5,10 @@ A thread-safe ATM system with account management capabilities.
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from .config import settings
-from .routers import accounts_router, health_router
+from .routers import accounts_router, health_router, welcome_router
 from .utils.logger import logger
 
 # Create FastAPI application
@@ -30,6 +31,7 @@ app.add_middleware(
 )
 
 # Include routers
+app.include_router(welcome_router)
 app.include_router(health_router)
 app.include_router(accounts_router)
 
