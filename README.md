@@ -291,15 +291,6 @@ The easiest way to deploy this ATM system is using Render:
    - Interactive Docs: `https://your-app-name.onrender.com/docs`
    - Welcome Page: `https://your-app-name.onrender.com/`
 
-#### Manual Configuration
-If you prefer manual setup:
-```bash
-# Service Type: Web Service
-# Runtime: Docker
-# Build Command: (automatic - Docker handles build)
-# Start Command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
-```
-
 ### Deployment Features
 - **Automatic Deployment**: Push to GitHub triggers Render deployment
 - **Health Checks**: Automatic container restart on failure
