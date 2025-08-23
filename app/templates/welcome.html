@@ -157,6 +157,10 @@
                 using per-account locking to ensure data integrity while allowing concurrent 
                 operations on different accounts.
             </p>
+            <p style="margin-top: 15px;">
+                <strong>📚 Interactive API Documentation:</strong> 
+                <a href="/docs" target="_blank" style="color: #3498db; text-decoration: none; font-weight: bold;">View Swagger UI Documentation</a>
+            </p>
         </div>
         
         <div class="api-section">
@@ -167,7 +171,7 @@
                 <div class="path">/health</div>
                 <div class="description">Check if the server is running and healthy</div>
                 <div class="example">curl https://dv-atm-system.onrender.com/health</div>
-                <div class="response">{"status": "healthy", "timestamp": "2024-01-01T12:00:00Z"}</div>
+                <div class="response">{"status": "healthy", "accounts_count": 0, "max_accounts": 1000, "timestamp": "2025-08-23T10:26:32.135495", "version": "1.0.0"}</div>
             </div>
             
             <div class="endpoint">
@@ -175,15 +179,15 @@
                 <div class="path">/accounts</div>
                 <div class="description">Create a new account with optional initial balance</div>
                 <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts -H "Content-Type: application/json" -d '{"initial_balance": 100.0}'</div>
-                <div class="response">{"account_number": "12345-67890", "balance": 100.0, "created_at": "2024-01-01T12:00:00Z"}</div>
+                <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "balance": 100.0, "message": "Account created successfully"}</div>
             </div>
             
             <div class="endpoint">
                 <div class="method get">GET</div>
                 <div class="path">/accounts</div>
-                <div class="description">List all accounts (returns account numbers only)</div>
+                <div class="description">List all accounts with their details</div>
                 <div class="example">curl https://dv-atm-system.onrender.com/accounts</div>
-                <div class="response">{"accounts": ["12345-67890", "98765-43210"]}</div>
+                <div class="response">{"total_accounts": 1, "max_accounts": 1000, "accounts": [{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "balance": 100.0, "created_at": "2025-08-23T10:27:15.357574", "last_updated": "2025-08-23T10:27:15.357574"}]}</div>
             </div>
             
             <div class="endpoint">
@@ -191,7 +195,7 @@
                 <div class="path">/accounts/{account_number}/balance</div>
                 <div class="description">Get the current balance of a specific account</div>
                 <div class="example">curl https://dv-atm-system.onrender.com/accounts/12345-67890/balance</div>
-                <div class="response">{"account_number": "12345-67890", "balance": 100.0}</div>
+                <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "balance": 100.0}</div>
             </div>
             
             <div class="endpoint">
@@ -199,7 +203,7 @@
                 <div class="path">/accounts/{account_number}/deposit</div>
                 <div class="description">Deposit money into a specific account</div>
                 <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/12345-67890/deposit -H "Content-Type: application/json" -d '{"amount": 50.0}'</div>
-                <div class="response">{"account_number": "12345-67890", "old_balance": 100.0, "new_balance": 150.0, "amount": 50.0, "transaction_type": "deposit"}</div>
+                <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "new_balance": 150.0, "transaction_amount": 50.0, "transaction_type": "deposit", "timestamp": "2025-08-23T10:27:52.989723"}</div>
             </div>
             
             <div class="endpoint">
@@ -207,7 +211,7 @@
                 <div class="path">/accounts/{account_number}/withdraw</div>
                 <div class="description">Withdraw money from a specific account</div>
                 <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/12345-67890/withdraw -H "Content-Type: application/json" -d '{"amount": 25.0}'</div>
-                <div class="response">{"account_number": "12345-67890", "old_balance": 150.0, "new_balance": 125.0, "amount": 25.0, "transaction_type": "withdraw"}</div>
+                <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "new_balance": 125.0, "transaction_amount": 25.0, "transaction_type": "withdrawal", "timestamp": "2025-08-23T10:28:02.492776"}</div>
             </div>
             
             <div class="endpoint">
@@ -215,7 +219,7 @@
                 <div class="path">/accounts/{account_number}</div>
                 <div class="description">Delete a specific account</div>
                 <div class="example">curl -X DELETE https://dv-atm-system.onrender.com/accounts/12345-67890</div>
-                <div class="response">{"message": "Account deleted successfully"}</div>
+                <div class="response">(Empty response - 204 No Content)</div>
             </div>
         </div>
         

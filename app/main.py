@@ -17,8 +17,8 @@ app = FastAPI(
     description=settings.APP_DESCRIPTION,
     version=settings.APP_VERSION,
     debug=settings.DEBUG,
-    docs_url="/docs" if settings.DEBUG else None,  # Hide docs in production
-    redoc_url="/redoc" if settings.DEBUG else None
+    docs_url="/docs",  # Enable docs in all environments
+    redoc_url="/redoc"  # Enable ReDoc in all environments
 )
 
 # Add CORS middleware for web access
