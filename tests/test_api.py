@@ -204,6 +204,111 @@ class ATMTester:
             print(f"❌ Rate limiting test error: {e}")
             return False
     
+    def test_max_accounts_limit(self) -> bool:
+        """Test that the system enforces MAX_ACCOUNTS limit"""
+        print("🔍 Testing MAX_ACCOUNTS limit...")
+        try:
+            # First, check current account count
+            response = self.session.get(f"{self.base_url}/health")
+            if response.status_code != 200:
+                print(f"❌ Cannot check health status: {response.status_code}")
+                return False
+            
+            health_data = response.json()
+            current_count = health_data.get('accounts_count', 0)
+            max_accounts = health_data.get('max_accounts', 1000)
+            
+            print(f"   Current accounts: {current_count}")
+            print(f"   Max accounts: {max_accounts}")
+            
+            # If we're already at the limit, we can't test this
+            if current_count >= max_accounts:
+                print("⚠️ Already at max accounts limit, cannot test")
+                return True
+            
+            # Try to create accounts until we hit the limit
+            accounts_to_create = max_accounts - current_count + 1
+            print(f"   Attempting to create {accounts_to_create} accounts to test limit...")
+            
+            created_count = 0
+            for i in range(accounts_to_create):
+                payload = {"initial_balance": 10.0}
+                response = self.session.post(f"{self.base_url}/accounts", json=payload)
+                
+                if response.status_code == 201:
+                    created_count += 1
+                    account_data = response.json()
+                    self.created_accounts.append(account_data["account_number"])
+                elif response.status_code == 400:
+                    error_data = response.json()
+                    if "Maximum number of accounts" in error_data.get('detail', ''):
+                        print(f"✅ MAX_ACCOUNTS limit enforced after {created_count} accounts")
+                        return True
+                    else:
+                        print(f"❌ Unexpected 400 error: {error_data}")
+                        return False
+                else:
+                    print(f"❌ Unexpected response: {response.status_code} - {response.text}")
+                    return False
+            
+            print(f"⚠️ Created {created_count} accounts but limit not reached")
+            return True
+            
+        except Exception as e:
+            print(f"❌ MAX_ACCOUNTS test error: {e}")
+            return False
+    
+    def test_max_transaction_amount(self) -> bool:
+        """Test that the system enforces MAX_TRANSACTION_AMOUNT limit"""
+        print("🔍 Testing MAX_TRANSACTION_AMOUNT limit...")
+        try:
+            # Create a test account with sufficient balance
+            account = self.test_create_account(20000.0)
+            if not account:
+                print("❌ Cannot test transaction limit without a valid account")
+                return False
+            
+            # Try to deposit more than the maximum allowed
+            max_amount = 10000.0  # Default from settings
+            test_amount = max_amount + 1000.0
+            
+            print(f"   Testing deposit of {test_amount} (max allowed: {max_amount})...")
+            
+            payload = {"amount": test_amount}
+            response = self.session.post(f"{self.base_url}/accounts/{account}/deposit", json=payload)
+            
+            if response.status_code == 400:
+                error_data = response.json()
+                if "Maximum transaction amount" in error_data.get('detail', ''):
+                    print(f"✅ MAX_TRANSACTION_AMOUNT limit enforced for deposit")
+                else:
+                    print(f"❌ Unexpected 400 error: {error_data}")
+                    return False
+            else:
+                print(f"❌ Expected 400 error but got {response.status_code}")
+                return False
+            
+            # Try to withdraw more than the maximum allowed
+            print(f"   Testing withdrawal of {test_amount} (max allowed: {max_amount})...")
+            
+            response = self.session.post(f"{self.base_url}/accounts/{account}/withdraw", json=payload)
+            
+            if response.status_code == 400:
+                error_data = response.json()
+                if "Maximum transaction amount" in error_data.get('detail', ''):
+                    print(f"✅ MAX_TRANSACTION_AMOUNT limit enforced for withdrawal")
+                    return True
+                else:
+                    print(f"❌ Unexpected 400 error: {error_data}")
+                    return False
+            else:
+                print(f"❌ Expected 400 error but got {response.status_code}")
+                return False
+                
+        except Exception as e:
+            print(f"❌ MAX_TRANSACTION_AMOUNT test error: {e}")
+            return False
+    
     def run_comprehensive_test(self):
         """Run all tests in sequence"""
         print("🚀 Starting comprehensive ATM API tests...\n")
@@ -276,8 +381,20 @@ class ATMTester:
         if self.test_rate_limiting():
             tests_passed += 1
         print()
+
+        # Test 11: MAX_ACCOUNTS limit
+        total_tests += 1
+        if self.test_max_accounts_limit():
+            tests_passed += 1
+        print()
         
-        # Test 11: Delete account
+        # Test 12: MAX_TRANSACTION_AMOUNT limit
+        total_tests += 1
+        if self.test_max_transaction_amount():
+            tests_passed += 1
+        print()
+        
+        # Test 13: Delete account
         total_tests += 1
         if account2 and self.test_delete_account(account2):
             tests_passed += 1

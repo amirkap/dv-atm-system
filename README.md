@@ -288,6 +288,8 @@ The easiest way to deploy this ATM system is using Render:
 3. **Access Your API**:
    - Get URL: `https://your-app-name.onrender.com`
    - Test: `curl https://your-app-name.onrender.com/health`
+   - Interactive Docs: `https://your-app-name.onrender.com/docs`
+   - Welcome Page: `https://your-app-name.onrender.com/`
 
 #### Manual Configuration
 If you prefer manual setup:
@@ -298,7 +300,12 @@ If you prefer manual setup:
 # Start Command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
+### Deployment Features
+- **Automatic Deployment**: Push to GitHub triggers Render deployment
+- **Health Checks**: Automatic container restart on failure
+- **Environment Variables**: Configurable via Render dashboard
+- **Custom Domains**: Can be added through Render dashboard
+- **SSL Certificate**: Automatic HTTPS with Let's Encrypt
 
 ## 🐛 Troubleshooting
 
