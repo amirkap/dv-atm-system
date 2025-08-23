@@ -194,7 +194,7 @@
                 <div class="method get">GET</div>
                 <div class="path">/accounts/{account_number}/balance</div>
                 <div class="description">Get the current balance of a specific account</div>
-                <div class="example">curl https://dv-atm-system.onrender.com/accounts/12345-67890/balance</div>
+                <div class="example">curl https://dv-atm-system.onrender.com/accounts/92be0cf4-2de5-411c-8439-2971e8156a19/balance</div>
                 <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "balance": 100.0}</div>
             </div>
             
@@ -202,7 +202,7 @@
                 <div class="method post">POST</div>
                 <div class="path">/accounts/{account_number}/deposit</div>
                 <div class="description">Deposit money into a specific account</div>
-                <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/12345-67890/deposit -H "Content-Type: application/json" -d '{"amount": 50.0}'</div>
+                <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/92be0cf4-2de5-411c-8439-2971e8156a19/deposit -H "Content-Type: application/json" -d '{"amount": 50.0}'</div>
                 <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "new_balance": 150.0, "transaction_amount": 50.0, "transaction_type": "deposit", "timestamp": "2025-08-23T10:27:52.989723"}</div>
             </div>
             
@@ -210,7 +210,7 @@
                 <div class="method post">POST</div>
                 <div class="path">/accounts/{account_number}/withdraw</div>
                 <div class="description">Withdraw money from a specific account</div>
-                <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/12345-67890/withdraw -H "Content-Type: application/json" -d '{"amount": 25.0}'</div>
+                <div class="example">curl -X POST https://dv-atm-system.onrender.com/accounts/92be0cf4-2de5-411c-8439-2971e8156a19/withdraw -H "Content-Type: application/json" -d '{"amount": 25.0}'</div>
                 <div class="response">{"account_number": "92be0cf4-2de5-411c-8439-2971e8156a19", "new_balance": 125.0, "transaction_amount": 25.0, "transaction_type": "withdrawal", "timestamp": "2025-08-23T10:28:02.492776"}</div>
             </div>
             
@@ -218,7 +218,7 @@
                 <div class="method delete">DELETE</div>
                 <div class="path">/accounts/{account_number}</div>
                 <div class="description">Delete a specific account</div>
-                <div class="example">curl -X DELETE https://dv-atm-system.onrender.com/accounts/12345-67890</div>
+                <div class="example">curl -X DELETE https://dv-atm-system.onrender.com/accounts/92be0cf4-2de5-411c-8439-2971e8156a19</div>
                 <div class="response">(Empty response - 204 No Content)</div>
             </div>
         </div>
